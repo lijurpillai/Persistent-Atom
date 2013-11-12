@@ -1,0 +1,241 @@
+<!--Action Table Code Starts -->
+<div class="row" ng-controller="TableCtrl">
+	<div class="container">
+		<div class="col-xs-12" >
+
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					<div class="hidden-xs">
+						<div class="container">
+							<!-- <div ng-show="data.isRule" class="col-xs-3">
+								<div class="input-group">
+									<span class="input-group-addon">Rule</span> <input type="text"
+										ng-model="search.ruleName" class="form-control"
+										placeholder="type to search">
+								</div>
+							</div> -->
+							<div class="col-xs-3">
+								<div class="input-group">
+									<span class="input-group-addon">Page</span> <input type="text"
+										ng-model="search.pageData" class="form-control"
+										placeholder="type to search">
+								</div>
+							</div>
+							<div class="col-xs-3	">
+								<div class="input-group">								
+									<span class="input-group-addon ">Tracking Id</span> <input
+										type="text" ng-model="search.trackingId" class="form-control"
+										placeholder="type to search">
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<div class="input-group">								
+									<span class="input-group-addon ">Device</span> <input
+										type="text" ng-model="search.device" class="form-control"
+										placeholder="type to search">
+								</div>
+							</div>
+							<!-- end of col-sm-3"-->
+						</div>
+						<!-- end of container"-->
+
+					</div>
+					<!-- end of class="hidden-xs"-->
+
+
+				</div>
+				<!-- end of panel heading"-->
+				<div class="panel-body">
+					<!-- table starts-->
+					<div class="scrolltable">
+						<div class="table-responsive">
+
+							<table class="table table-hover table-bordered">
+								<thead>
+
+									<tr>
+										<th>Sl No</th>
+										<th><a href=""
+											ng-click="predicate = 'trackingId'; reverse=!reverse">Tracking Id</a>
+											<a href="" ng-click="predicate = 'trackingId'; reverse=!reverse">
+											<span class="glyphicon glyphicon-collapse-up"></span></a>
+										</th>
+										<th><a href=""
+											ng-click="predicate = 'isNewUser'; reverse=!reverse">User Type</a>
+											<a href="" ng-click="predicate = 'online'; reverse=!reverse">
+											<span class="glyphicon glyphicon-collapse-up"></span></a>
+										</th>
+										<!-- <th><a href=""
+											ng-click="predicate = 'ruleName'; reverse=!reverse">Rule</a>
+											<a href="" ng-click="predicate = 'ruleName'; reverse=!reverse">
+											<span class="glyphicon glyphicon-collapse-up"></span></a>
+										</th> -->
+										<th>Page</th>
+										<th><a href=""
+											ng-click="predicate = 'timeStamp'; reverse=!reverse">Time</a>
+											<a href="" ng-click="predicate = 'timeStamp'; reverse=!reverse">
+											<span class="glyphicon glyphicon-collapse-up"></span></a>
+										</th>										
+										<th class="visible-xs">More</th>
+										<th>Req Status</th>
+										<th><a href=""
+											ng-click="predicate = 'online'; reverse=!reverse">Online</a>
+											<a href="" ng-click="predicate = 'online'; reverse=!reverse">
+											<span class="glyphicon glyphicon-collapse-up"></span></a>
+										</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody ng-repeat="data in ruleData | orderBy:predicate:reverse | filter:search">
+									<tr >
+										<!-- Table body -->
+										<td>{{$index+1}}</td>
+										<td><img ng-src="{{data.deviceUrl}}" alt="" >{{data.trackingId}}</td>										
+										<td>
+										<span ng-show="data.isNewUser" class="label label-success">New User</span>
+										<span ng-show="!data.isNewUser" class="label label-danger">Return User</span>
+										</td>
+										<!-- <td ng-show="data.isRule">{{data.ruleDetails.ruleName}}</td> -->
+										<td>{{data.pageData.pathname}}</td>
+										<td>{{data.timeStamp|date:'medium'}}</td>										
+										<td class="visible-xs"><a data-toggle="modal"
+											href="#moreInfoModal{{$index}}" class="btn btn-primary btn-xs"> <span
+												class="glyphicon glyphicon-share"></span></a></td>
+										<!-- /.modal starts -->
+										
+										<td>											
+											<!-- <select class="form-control">
+											  <option selected="selected" >New</option>
+											  <option>In Progress</option>
+											  <option>Close - Chat</option>
+											  <option>Close - Push</option>											  
+											</select> -->
+											<span ng-show="data.reqStatus" class="label label-success">New</span>
+											<span ng-show="!data.reqStatus" class="label label-danger">In Progress</span>
+											<span  class="nullable">
+											<select ng-model="reqOption" ng-options="o.name for o in requestOptions">
+												<option selected="selected" value="">--select--</option>
+											</select>
+											
+											</span>
+										</td>
+										<td>
+										<span ng-show="data.online"  class="label label-success">Online</span>
+										<span ng-show="!data.online" class="label label-danger">Offline</span>
+										</td>
+										<td>
+											<a data-toggle="modal" href="#moreInfoModal{{$index}}" class="btn btn-primary btn-xs">
+											<span class="glyphicon glyphicon-share"></span> More</a>								
+											
+											<button type="button" class="btn btn-primary btn-xs"  ng-disabled = "!data.online" ng-click="chat(data.trackingId,$index)">
+												<span class="glyphicon glyphicon-comment"></span> Chat
+											</button>																																	
+											<a data-toggle="modal"  href="#pushModal{{$index}}"  class="btn btn-primary btn-xs" ng-class="{disabled:!data.online}">
+												<span class="glyphicon glyphicon-send"></span> Push</a>
+											<div class="modal fade" data-backdrop = "false" id="moreInfoModal{{$index}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+												aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal"
+																aria-hidden="true">&times;</button>
+															<h3 class="modal-title">More info</h3>
+															<div id = "tId">
+															
+																<h6 class="modal-title pull-right">Tracking Id: {{data.trackingId}}</h6>
+															
+															</div>														
+															<h6 class="modal-title">
+																<span ng-show="data.online"  class="label label-success">Online</span>
+																<span ng-show="!data.online" class="label label-danger">Offline - closing popup window</span>
+															</h6>														
+														</div>
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-md-12 col-xs-12 col-sm-12">
+	
+																	<div class="visible-xs">
+																		<h4>
+																			Status<span class="label label-default">Value</span>
+																		</h4>
+																	</div>
+																		 <span><strong>Cookie enabled : </strong>{{data.pageData.cookieEnabled}}</span><br>
+																		 <span><strong>LocalStorage enabled : </strong>{{data.pageData.localStorageEnabled}}</span><br>
+																		 <span><strong>First Visited : </strong>{{data.pageData.firstVisit|date:'medium'}}</span><br>
+																		 <span><strong>Last Visited : </strong>{{data.pageData.lastVisit|date:'medium'}}</span><br>
+																		 <span><strong>Total Visits : </strong>{{data.pageData.totalVisit}}</span><br>
+																		 <span><strong>Browser : </strong>{{data.browser}}</span><br>
+																		 <span><strong>Referrer : </strong>{{data.pageData.referrer}}</span><br>
+																		 <span><strong>User Agent : </strong>{{data.pageData.navigatorAgent}}</span>
+																	</div>
+															</div>
+	
+															<hr>
+															<h3>Action</h3>														
+															<button class="btn btn-primary btn-xs" ng-click="chat(data.trackingId,$index)">
+																<span class="glyphicon glyphicon-comment"></span> Chat
+															</button>															
+															<h4>Push offer code</h4>
+															<textarea ng-model = "pushData"></textarea>
+															<div align="center">
+																<button type="button" class="btn btn-primary btn-xs" ng-click = "push(data.trackingId,pushData,$index)">Push and Close</button>
+																<button type="button" class="btn btn-primary btn-xs" data-dismiss="modal">Close</button>
+															</div>
+														</div>													
+													</div>
+													<!-- /.modal-content -->
+												</div>
+												<!-- /.modal-dialog -->
+											</div>
+											<!-- /.modal ends -->																				
+										<!-- /.modal1 starts -->
+										<div class="modal fade" data-backdrop = "false" ng-model="open" id="pushModal{{$index}}" tabindex="-1"	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div  class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title">Push offer code</h4>
+														<div id = "tId">
+														
+																<h5 class="modal-title pull-right">Tracking Id: {{data.trackingId}}</h5>
+																
+														</div>															
+														<h6 class="modal-title">
+															<span ng-show="data.online"  class="label label-success">Online</span>
+															<span ng-show="!data.online" class="label label-danger">Offline - closing push window</span>
+														</h6>
+													</div>													
+													<div class="modal-body">
+															<textarea ng-model = "pushData"></textarea>
+													</div>
+													<div class="modal-footer">
+														<button ng-click = "push(data.trackingId,pushData,$index)" type="button" class="btn btn-primary">Push and Close</button>
+														<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+													</div>													
+												</div>
+												<!-- /.modal-content -->
+											</div>
+											<!-- /.modal-dialog -->
+										</div>
+										<!-- /.modal1 ends -->
+									  </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!--responsive table ends -->
+					</div>
+					<!-- end of scrolltable"-->
+				</div>
+				<!-- end of panel body"-->
+			</div>
+			<!-- column ends -->
+		</div>
+		<!-- panelends -->
+	</div>
+	<!-- container ends -->
+</div>
+<!--row ends -->
+</div>
+<!--Action Table Code Ends -->

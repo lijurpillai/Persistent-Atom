@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html id="ng-app" lang="en" ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="favicon.png">
+<title>Atom - by Perfomatix</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<!-- Custom styles for this template -->
+<link href="css/rexim.css" rel="stylesheet">
+<link href="css/widget.css" rel="stylesheet">
+<!-- Chat box styles for this template -->
+<link rel="stylesheet" href="lib/util_lib/jquery.ui.chatbox/css/ui-blue/jquery-ui-1.10.3.custom.min.css" type="text/css" media="screen" />
+<link type="text/css" href="lib/util_lib/jquery.ui.chatbox/jquery.ui.chatbox.css" rel="stylesheet" />
+</head>
+<body ng-cloak>
+   <div>
+		<!--Navbr (Header)starts -->
+		<nav class="navbar navbar-inverse" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button ng-show="isLoggedIn" type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> 
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/dashboard">ATOM</a>				
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse" ng-controller = "NavCtrl">
+				<ul ng-show="isLoggedIn" class="nav navbar-nav">
+					<li ng-class="{active:isActive('/dashboard')}"><a href="#/dashboard"><span class="glyphicon glyphicon-dashboard"></span>Dashboard</a></li>
+					<li ng-class="{active:isActive('/actiontable')}"><a href="#/actiontable"><span class="glyphicon glyphicon-tasks"></span> Action Tables</a></li>
+					<li ng-class="{active:isActive('/ruleactiontable')}"><a href="#/ruleactiontable"><span class="glyphicon glyphicon-tasks"></span> Rule Action Tables</a></li>				
+				</ul>				
+				<ul ng-show="isLoggedIn" class="nav navbar-nav navbar-right">
+					<div></div>					
+					<li class="dropdown ng-cloak">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{FIRST_NAME + " " + LAST_NAME}}<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">														
+							<li><a href="#/" ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
+						</ul></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</nav>
+		<!-- navbar header ends-->
+		<!--footer navbar starts-->
+		<nav class="navbar navbar-inverse navbar-fixed-bottom">
+		
+			<div class="container">
+				<p class="navbar-text pull-left">{{ 'Current version is v%VERSION%.' | interpolate }}</p>				
+				<p class="navbar-text pull-right">
+				 <a href="http://www.perfomatix.com" target='_blank' class="navbar-link">© 2013 Perfomatix Solutions Private Limited</a>
+				</p>
+			</div>
+			<!-- end of container -->
+		</nav>
+	</div>	
+	<div ng-view></div>
+	
+</body>
+
+
+<!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  -->
+<!-- Angular libs -->
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-resource.min.js"></script>
+<!-- Angular libs ends-->
+<!-- Pubnub lib -->
+<script src="http://cdn.pubnub.com/pubnub-3.5.3.1.min.js"></script>
+<!-- Pubnub lib ends-->
+<!-- Util libs -->
+<script src="lib/util_lib/jquery.js"></script>
+<script src="lib/util_lib/bootstrap.min.js"></script>
+<script src="lib/util_lib/ui-bootstrap-tpls-0.6.0.min.js"></script>
+<script src="lib/util_lib/jquery.ui.chatbox/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="lib/util_lib/jquery.ui.chatbox/jquery.ui.chatbox.js"></script>
+<script src="lib/util_lib/geolocator.min.js"></script>
+<script src="lib/util_lib/underscore-min.js"></script>
+<script src="lib/util_lib/jquery.flot.js"></script>
+<script src="lib/util_lib/jquery.flot.pie.js"></script>
+<script src="lib/util_lib/jquery.flot.axislabels.js"></script>
+
+<!-- Util libs ends-->
+<!-- Application libs -->
+<script src="js/app.js"></script>
+	<!-- Services -->
+<script src="js/services/authService.js"></script>
+<script src="js/services/pubNubService.js"></script>
+<script src="js/services/utilService.js"></script>
+<script src="js/services/communicationService.js"></script>
+<script src="js/services/analyticsService.js"></script>
+<script src="js/services/ruleService.js"></script>
+<script src="js/services/dataService.js"></script>
+
+	<!-- Controllers -->
+<script src="js/controllers/indexController.js"></script>
+<script src="js/controllers/logincontrollers.js"></script>
+<script src="js/controllers/dashBoardControllers.js"></script>
+<script src="js/controllers/actionTableControllers.js"></script>
+<script src="js/controllers/ruleActionTableControllers.js"></script> 
+	<!-- Filters-->
+<script src="js/filters/filters.js"></script>
+	<!-- Directives -->
+<script src="js/directives/authDirectives.js"></script>	
+<script src="js/directives/chartDirectives.js"></script>	
+<!-- Application libs ends-->
+<!-- <script type="application/javascript">
+    function getip(json){
+      alert(json.ip); // alerts the ip address
+    }
+</script>
+
+<script type="application/javascript" src="http://jsonip.appspot.com/?callback=getip"></script> -->
+
+
+</html>

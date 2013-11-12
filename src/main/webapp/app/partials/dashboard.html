@@ -1,0 +1,150 @@
+<div class="container" ng-controller="PresenceCtrl">
+<div class="row">
+<div class="col-sm-4 col-xs-12">	
+	<div class="row">
+        <div class="alert alert-info">All data displayed is since <strong>{{loginTime|date:'medium'}}</strong>
+        <br>
+        <div class ="plan-font5">
+        Please do not refresh or use back button. All data will reset after logout.<br>
+        For help,place mouse pointer over <span class="glyphicon glyphicon-info-sign"></span> icon.
+        </div>
+       </div>
+ 	</div> 
+	<div class="row">
+		 <div class="pricing-table pricing-three-column">
+        <div class="plan">
+		 <div class="plan-name-silver">
+          <a href="#/actiontable" ><h4><span class="glyphicon glyphicon-info-sign" tooltip="{{activeUsersTooltip}}"></span> Active Users  <button type="button" class="btn btn-md btn-primary">{{activeUsers}}</button></h4></a>
+        </div>
+        </div>
+ 	</div>		
+ 	</div>
+ 	<br>
+ 	<div class="row">
+ 		<div class="pricing-table pricing-three-column">
+        <div class="plan">
+		 <div class="plan-name-silver">
+		 	<a href="#/dashboard" ><h4><span class="glyphicon glyphicon-info-sign" tooltip="{{allUsersTooltip}}"></span> All Users  <button type="button" class="btn btn-md btn-primary">{{allUsers}}</button></h4></a>
+		 	</div>
+        </div>
+ 	  </div>
+    <br>
+ 	</div>
+
+
+</div><!--end col-sm-3 -->
+
+	
+	<div class="col-sm-8 col-xs-12">
+
+               
+             <div class="alert alert-info">  
+				<strong><span class="glyphicon glyphicon-info-sign" tooltip="{{userDetailsTooltip}}"></span> User Details</strong>	
+				
+				<div class="row">  
+					<div class="col-sm-5 hidden-xs">
+                	<piechart ng-model="pieChartUserType"></piechart>
+                	</div>	
+					<div class="col-sm-1"></div>	
+		<div class="col-sm-6 col-xs-12">
+		  
+				  <div class="table-responsive">
+				    <table class="table table-bordered table-hover">				   
+				                    <tr>
+				                    <th class="text-center">Type</th>
+				                      <th class="text-center">Device</th>
+				                      <th class="text-left">Operating System</th>
+				                      <th class="text-center">Visits</th>
+				                    </tr>
+
+				                    <tr>
+				                    <td class="text-center"><h5>Dekstop <span class="badge"><strong>{{deskTop}}</strong></span></h5></td>
+				                     <td class="text-center"><img src="img/icons/desktop.png" alt="" ></td>
+				                     <td class="text-left">Windows/Mac/Linux</td>
+				                     <td><button type="button" class="btn btn-sm btn-primary">{{deskTop}}</button></td>
+				                    </tr>
+
+				                    <td rowspan="5" class="text-center"><h5>Handheld <span class="badge"><strong>{{androidDevice+iOSDevice+winDevice}}</strong></span>
+				                    </h5>
+				                    </td>
+				
+				                    <tr>
+				                      <td class="text-center"><img src="img/icons/android.png" alt="" />
+				                      <td class="text-left">Android</td>
+				                      <td><button type="button" class="btn btn-sm btn-primary">{{androidDevice}}</button></td>
+				                    </tr> 
+
+				                    <tr>
+				                      <td class="text-center"><img src="img/icons/ios.png" alt="" />
+				                      <td class="text-left">Apple iOS</td>
+				                      <td><button type="button" class="btn btn-sm btn-primary">{{iOSDevice}}</button></td>
+				                    </tr>  
+
+				                     <tr>                                                                                     
+				                      <td class="text-center"><img src="img/icons/metro.png" alt="" />
+				                      <td class="text-left">Windows Mobile</td>
+				                      <td><button type="button" class="btn btn-sm btn-primary">{{winDevice}}</button></td>
+				                    </tr>   
+				    </table>
+				  
+				</div><!-- end table responsive-->
+
+		</div> <!-- end col-sm-7 col-xs-12 -->
+
+
+		</div><!-- end row-->
+	</div><!-- end alert-->
+ </div><!-- end col col-sm-8 col-xs-12"-->
+
+
+
+</div><!--end row-->
+
+
+	<div class=" col-sm-5 col-xs-12">
+
+		<div class="widget">
+		<div class="widget-head">
+        <div class="pull-center">
+        <div class="container">
+                  		<strong><span class="glyphicon glyphicon-info-sign" tooltip="{{ruleDetailsTooltip}}"></span> Rules</strong> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+			<a href="#/ruleactiontable" type="button" class="btn btn-sm btn-info">Total Count <span class="badge"><strong>{{totalRules}}</strong></span></a>
+		</div>
+        </div><!--end pull center -->
+        </div><!--end widget head -->  
+
+            <div class="widget-content">	
+			<table class="table table-bordered table-hover">
+  					<thead>
+  						<tr>
+  							<th>Name</th>
+  							<th>Id</th>
+  							<th>Count</th>
+  						</tr>  						
+  					</thead>
+  					<tbody ng-repeat="ruleDetails in ruleDetailsName" >
+  						<tr>
+  							<td>{{ruleDetails.displayName}}</td>
+  							<td>{{ruleDetails.ruleId}}</td>  
+  							<td><button ng-click = "goToRuleTable(ruleDetails.ruleId)" type="button" class="btn btn-sm btn-primary">{{ruleDetails.ruleCount}}</button></td>
+  						</tr>
+  					</tbody>
+				</table>
+			</div><!-- end widget content -->
+		</div><!-- end widget  -->
+	</div> <!-- end col-sm-5 col-xs-12-->
+
+
+<div class=" col-md-7 hidden-xs hidden-sm">
+		<div class="widget">
+                <div class="widget-head">
+                <div class="pull-center"><span class="glyphicon glyphicon-info-sign" tooltip="{{pageCountTooltip}}"></span> Page Visits
+                 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                 Total page visits since <div class="label label-info">{{loginTime|date:'medium'}}</div> is <div class="label label-info">{{totalPageCount}}</div>               
+                </div>  <!--enc widget head -->
+
+                <div class="widget-content">	
+				<chart ng-model='chartData'></chart>
+		 		</div> <!--widget content-->
+		 </div> <!--end widget -->
+</div><!--enc controller -->
