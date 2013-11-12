@@ -36,7 +36,7 @@ public class UserController {
 	public @ResponseBody
 	ResponseMessage loggedIn(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session){
-		logger.debug("inside /loggedin");
+		logger.debug("inside /loggedin method");
 		UserProfileModelResponse userProfileModelResponse = new UserProfileModelResponse();	
 		if(session != null){
 			userProfileModelResponse = (UserProfileModelResponse) session.getAttribute(Constants.SESS_KEY_USER_PROFILE);
