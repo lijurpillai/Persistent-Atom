@@ -2,26 +2,117 @@
 /* Controllers */
 
 angular.module('myApp.actionTableCtrl', []).
-  controller('TableCtrl',['$scope','AnalyticsData','$log','ChatService','PubnubService','Constants',
-                          function($scope,AnalyticsData,$log,ChatService,PubnubService,Constants){	  
-	 // $scope.$watch('activeUsers', function() {	
-		//console.log("IN THIS WORLD");
-		//var device = AnalyticsData.getAnalyticsData().device;	  
+  controller('TableCtrl',['$scope','AnalyticsData','$log','ChatService','PubnubService','Constants','SessionManager','UtilService',
+                          function($scope,AnalyticsData,$log,ChatService,PubnubService,Constants,SessionManager,UtilService){	  
+	   
 	  $scope.ruleData = AnalyticsData.getAnalyticsData();	  
 	  $scope.predicate = '-timeStamp'; 
 	  
-	  $scope.requestOptions = [	                   
-	                   {name:'Close - Chat', value:1},
-	                   {name:'Close - Push', value:2}	                   
-	                 ];	  
-	  /*$scope.$watch('ruleData.online', function(changed) {
-		  console.log("IN THIS WORLD");
-		  console.log(changed);
-	  },true);*/
+	  var userProfile = SessionManager.getSessionData(Constants.SESS_KEY_USER_PROFILE);
+	  var assignmentChannel = UtilService.getChannelNameForAssignment(userProfile.orgId);
+	  
+	  PubnubService.PUBNUB.subscribe({
+		  channel : assignmentChannel,
+	        message : function(data){
+	        	if(data.msgType === Constants.MSG_TYP_ASSIGN){
+	        		var isAgentAssigned = false;
+	        		// check in tracker if assignment already exists
+	        		 // if agent_id is same as data.msg.agentId ignore as user is same.
+	        		var assignmentTracker = UtilService.getAssignmentTracker();
+	        		for ( var i = 0; i < assignmentTracker.length; i++) {	        			
+						if(assignmentTracker[i].trackingId === data.msg.trackingId && assignmentTracker[i].agentId === data.msg.agentId)
+							{
+							// data received from same client publish
+							isAgentAssigned = true;
+							console.log("data received from same client publish");							
+							}
+						else if (assignmentTracker[i].trackingId === data.msg.trackingId && assignmentTracker[i].agentId != data.msg.agentId){
+							// update tracker
+							isAgentAssigned = true;
+							UtilService.setAssignmentTracker(data.msg.trackingId,data.msg.agentId);
+							AnalyticsData.assignRequest(data.msg.trackingId,data.msg.agentId);
+							$scope.$apply();
+						}
+					}
+	        		if(!isAgentAssigned){
+	        			UtilService.setAssignmentTracker(data.msg.trackingId,data.msg.agentId);
+						AnalyticsData.assignRequest(data.msg.trackingId,data.msg.agentId);
+						$scope.$apply();
+	        		}
+	        	}
+	        	
+	        	if(data.msgType === Constants.MSG_TYP_RELEASE){
+	        		// if same user ignore
+	        		// else remove from AT and AD
+	        		if( userProfile.loginId !== data.msg.agentId){
+	        		  AnalyticsData.releaseRequest(data.msg.trackingId,data.msg.agentId);
+	      			  UtilService.removeAssignmentData(data.msg.trackingId);
+	      			  $scope.$apply();
+	        		}
+	        	}
+	        }
+	        /*{
+	        	if(data.msgType === Constants.MSG_TYP_RELEASE && data.msg.agentId != userProfile.loginId){
+	        		AnalyticsData.releaseRequest(data.msg.trackingId,data.msg.agentId);
+	        		UtilService.removeAssignmentData(data.msg.trackingId);
+	        		$scope.$apply();
+	        	}
+	        	else if(data.msgType === Constants.MSG_TYP_RELEASE && data.msg.agentId === userProfile.loginId){
+	        		//AnalyticsData.releaseRequest(data.msg.trackingId,data.msg.agentId);
+	        		UtilService.removeAssignmentData(data.msg.trackingId);
+	        		$scope.$apply();
+	        	}
+	        	else if(data.msgType === Constants.MSG_TYP_ASSIGN && data.msg.agentId != userProfile.loginId) {
+	        		
+		        	UtilService.setAssignmentTracker(data.msg.trackingId,data.msg.agentId,AnalyticsData.getAnalyticsData());
+		        	// update Analytics data with agent details
+		        	AnalyticsData.assignRequest(data.msg.trackingId,data.msg.agentId);
+		        	$scope.$apply();
+	        	}	        	
+	        }*/
+	  })
+	  
+	  $scope.limits = [{
+	    value: '1',
+	    text: 'Assign to me'
+	  }, {
+	    value: '2',
+	    text: 'Release to Queue'
+	  },
+	  {
+		value: '99',
+		text: '---Select---'
+	  }];
+	  
+	  
+	  $scope.assign = function(trackingId , selectedLimit){		  
+		  
+		  if(!selectedLimit || selectedLimit === '99' ){
+			  alert("Please select valid option before submitting")
+		  }
+		  else if(selectedLimit === '1'){// assign to me			  
+			  // update status in assignment tracker
+			  UtilService.setAssignmentTracker(trackingId,userProfile.loginId);
+			  // update data in analyticsData
+			  AnalyticsData.assignRequest(trackingId,userProfile.loginId);			  
+			 // publish data
+			 var msg = {trackingId:trackingId,agentId:userProfile.loginId};		 
+			 PubnubService.PUBNUB_PUB(Constants.MSG_TYP_ASSIGN,msg,assignmentChannel);	
+		  }
+		  else if (selectedLimit === '2'){ // release by me
+			  AnalyticsData.releaseRequest(trackingId,userProfile.loginId);
+			  UtilService.removeAssignmentData(trackingId);
+			  $scope.$apply();
+			  var msg = {trackingId:trackingId,agentId:userProfile.loginId};
+			  PubnubService.PUBNUB_PUB(Constants.MSG_TYP_RELEASE,msg,assignmentChannel);	
+			  // release to Q
+		  }
+		  
+	  }
 	  
 	  $scope.chat = function(trackingId,index){
 		  // change status from new to in progress
-		  ChatService.changeReqStatusAnalytics(trackingId);
+		  //ChatService.changeReqStatusAnalytics(trackingId);
 		  var modalId = '#moreInfoModal'+index;
 		  $(modalId).modal('hide'); // Hide More Info modal.Req if chat clicked from modal		  
 		  var clientChannel = ChatService.getClientChannel(trackingId);

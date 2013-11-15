@@ -134,14 +134,28 @@ analyticsService.factory('AnalyticsData',['$log','UserAgentService','Constants',
 		setAnalyticsData:function(data){
 			$log.info("inside AnalyticsData>setAnalyticsData");
 			var trackingId = data.trackingId;			
-			data.online = true;	// set online status as true
-			data.reqStatus = true ;// set data status to new. On click of chat change it to false.
+			data.online = true;	// set online status as true			
 			data.timeStamp = Date.now();// set current time in millisec			
 			UserAgentService.setUserAgent(data.pageData.navigatorAgent);
 			data.isMobile = UserAgentService.isMobile();			
 			data.device =  UserAgentService.getDeviceType();
 			data.browser = UserAgentService.getBrowserType();
-			data.deviceUrl = UtilService.getDeviceImgUrl(data.device);			
+			data.deviceUrl = UtilService.getDeviceImgUrl(data.device);
+			
+			// Check if any agent assigned to this t_id.
+			var assignmentData = UtilService.isReqAssigned(trackingId);
+			// If yes update status to true and
+			if(assignmentData){
+				data.reqStatus = assignmentData.status ;// set data status to new. On click of chat change it to false.
+				data.agentId = 	assignmentData.agentId;		
+				
+			}
+			else{
+				data.reqStatus = false ;
+				data.agentId = null;
+			}
+			
+			
 			  // Remove existing data for same user.
 			for (var i = 0; i < analyticsData.length; i++) {				
 				if(trackingId == analyticsData[i].trackingId){
@@ -163,6 +177,24 @@ analyticsService.factory('AnalyticsData',['$log','UserAgentService','Constants',
 	    	console.log(analyticsData);
 	    	return analyticsData;
 	    },
+	    assignRequest:function(trackingId,agentId){ 
+			//var analyticsData = analyticsData;	    	
+			for (var i = 0; i < analyticsData.length; i++) {				
+				if(trackingId == analyticsData[i].trackingId){
+					analyticsData[i].reqStatus = true;
+					analyticsData[i].agentId = agentId;
+				};  
+			}
+		},
+		releaseRequest:function(trackingId,agentId){ // changing req status to inprogress on press of Chat
+			//var analyticsData = analyticsData;	    	
+			for (var i = 0; i < analyticsData.length; i++) {				
+				if(trackingId == analyticsData[i].trackingId){
+					analyticsData[i].reqStatus = false;
+					analyticsData[i].agentId = null;
+				};  
+			}
+		},
 	    setRuleData:function(data){
 			$log.info("inside AnalyticsData>setRuleData");					
 			data.online = true;	// set online status as true

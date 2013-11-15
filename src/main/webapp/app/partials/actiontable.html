@@ -36,6 +36,13 @@
 										placeholder="type to search">
 								</div>
 							</div>
+							<div class="col-xs-3">
+								<div class="input-group">								
+									<span class="input-group-addon ">Agent</span> <input
+										type="text" ng-model="search.agentId" class="form-control"
+										placeholder="type to search">
+								</div>
+							</div>
 							<!-- end of col-sm-3"-->
 						</div>
 						<!-- end of container"-->
@@ -78,7 +85,12 @@
 											<span class="glyphicon glyphicon-collapse-up"></span></a>
 										</th>										
 										<th class="visible-xs">More</th>
-										<th>Req Status</th>
+										<th><a href=""
+											ng-click="predicate = 'agentId'; reverse=!reverse">Assigned</a>
+											<a href="" ng-click="predicate = 'agentId'; reverse=!reverse">
+											<span class="glyphicon glyphicon-collapse-up"></span></a>
+										</th>										
+										<th>Select User</th>
 										<th><a href=""
 											ng-click="predicate = 'online'; reverse=!reverse">Online</a>
 											<a href="" ng-click="predicate = 'online'; reverse=!reverse">
@@ -104,20 +116,18 @@
 												class="glyphicon glyphicon-share"></span></a></td>
 										<!-- /.modal starts -->
 										
-										<td>											
-											<!-- <select class="form-control">
-											  <option selected="selected" >New</option>
-											  <option>In Progress</option>
-											  <option>Close - Chat</option>
-											  <option>Close - Push</option>											  
-											</select> -->
-											<span ng-show="data.reqStatus" class="label label-success">New</span>
-											<span ng-show="!data.reqStatus" class="label label-danger">In Progress</span>
-											<span  class="nullable">
-											<select ng-model="reqOption" ng-options="o.name for o in requestOptions">
-												<option selected="selected" value="">--select--</option>
-											</select>
-											
+										<td>
+											<span ng-show="!data.reqStatus" class="label label-info">Un-Assigned</span>
+											<span ng-show="data.reqStatus" class="label label-warning">{{data.agentId}}</span>
+										</td>
+										<td>
+											<span  class="nullable">											
+											<select id="limitType" name="limit" ng-model="selectedLimit" ng-options="limit.value as limit.text for limit in limits" 
+											ng-init="selectedLimit='99'">
+											</select>    										
+											<button  type="button" class="btn btn-primary btn-xs" ng-click="assign(data.trackingId,selectedLimit)">
+												Ok
+											</button>
 											</span>
 										</td>
 										<td>

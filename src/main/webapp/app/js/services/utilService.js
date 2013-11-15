@@ -14,9 +14,12 @@ utilService.factory('Constants',['$log',function($log){
     //channels
 	var analyticsChannel = "analyticsData";
 	var chatChannel = "chat";	
+	var assignmentChannel = "assignmentChannel";
 	var msgTypeChatClose = 99; // Clinet closes window
 	var msgTypeChat = 1; // Chat
 	var msgTypePush = 21; // Push
+	var msgTypeAssign = 31;// Assignment
+	var msgTypeRelease = 32;// Release assignment
 	//session key
 	var session_key_userProfile = "userProfile";
 	var session_key_ruleProfile = "ruleProfile";
@@ -48,12 +51,15 @@ utilService.factory('Constants',['$log',function($log){
 		SUB_KEY:subscribe_key,		
 		PUBNUB_ANALYTICS_CHANNEL:analyticsChannel,
 		PUBNUB_CHAT_CHANNEL: chatChannel,
+		PUB_NUB_ASSIGN_CHANNEL:assignmentChannel,
 		SEPERATOR: seperator,
 		SESS_KEY_USER_PROFILE:session_key_userProfile,
 		SESS_KEY_RULE_PROFILE:session_key_ruleProfile,
 		MSG_TYP_CHAT_CLOSE:msgTypeChatClose,
 		MSG_TYP_CHAT:msgTypeChat,
 		MSG_TYP_PUSH : msgTypePush,
+		MSG_TYP_ASSIGN : msgTypeAssign,
+		MSG_TYP_RELEASE : msgTypeRelease,
 		ERR_MSG_MAX_WINDOW:maxWindowLimit,
 		ANDROID_DEVICE:androidDevice,
 		I_OS_DEVICE:iOSDevice,	
@@ -110,11 +116,15 @@ utilService.factory('SessionManager',['$log','Constants','RuleData','AnalyticsDa
 
 utilService.factory('UtilService',['$log','Constants',function($log,Constants){
 	//** Page config for chart display**//
-	var pageCountConfig = [[1,"Index"], 
+	/*var pageCountConfig = [[1,"Index"], 
 	                       [2, "Home"], 
 	                       [3, "Autumn"], 
-	                       [4, "Other"]];
+	                       [4, "Other"]];*/
 	//** Ends **//
+	//** assignemnt tracker**//
+		var assignmentTracker= [];		
+	//** assignemnt tracker ENDS**//
+	
 return{
 	getDeviceImgUrl :function(device){
 		switch (device) {
@@ -135,8 +145,114 @@ return{
 			break;
 		}
 	},
-	getPageCountConfig :function(){return pageCountConfig;
-						}
+	getChannelNameForAssignment : function(orgId){
+		console.log("ASSIGNMENT CHANEL -- >" + orgId + Constants.SEPERATOR + Constants.PUB_NUB_ASSIGN_CHANNEL);
+		return orgId + Constants.SEPERATOR + Constants.PUB_NUB_ASSIGN_CHANNEL;
+	},
+	setAssignmentTracker:function(trackingId,agentId){	
+		var isNewTrackingId = true;
+		var tracker = {};		
+		// if tracker is null add data.
+		if(assignmentTracker.length == 0){			
+			tracker.trackingId = trackingId;
+			tracker.agentId = agentId;
+			tracker.status = true; // assigned
+			assignmentTracker.push(tracker);			
+		}
+		// else if trackingId matches update status to true and agent Id
+		else{			
+			for ( var i = 0; i < assignmentTracker.length; i++) {
+				// if t_id already exist update
+				if(assignmentTracker[i].trackingId === trackingId){
+					isNewTrackingId = false;
+					assignmentTracker[i].agentId = agentId;	
+					assignmentTracker[i].status = true;
+					break;
+					//assignmentTracker.push(tracker);
+				}								
+			}
+			if(isNewTrackingId){
+				tracker.trackingId = trackingId;
+				tracker.agentId = agentId;	
+				tracker.status = true;
+				assignmentTracker.push(tracker);
+			}
+		}
+		
+		},
+		getAssignmentTracker:function(){
+			return assignmentTracker;
+		},
+	/*setAssignmentTracker:function(trackingId,agentId,analyticsData){	
+		var updateData = true;
+		var tracker = {};
+		var updateAnalyticsData = function(){
+			for (var i = 0; i < analyticsData.length; i++) {				
+				if(trackingId == analyticsData[i].trackingId){
+					analyticsData[i].reqStatus = true;
+					analyticsData[i].agentId = 	agentId;
+				};  
+			}
+		}
+		// if tracker is null add data.
+		if(assignmentTracker.length == 0){			
+			tracker.trackingId = trackingId;
+			tracker.agentId = agentId;
+			tracker.status = true; // assigned
+			assignmentTracker.push(tracker);
+			//updateAnalyticsData();
+		}
+		// else if trackingId matches update statu to true and agent Id
+		else{			
+			for ( var i = 0; i < assignmentTracker.length; i++) {
+				if(assignmentTracker[i].trackingId == trackingId){
+					tracker.trackingId = trackingId;
+					tracker.agentId = agentId;	
+					tracker.status = true;
+					assignmentTracker.push(tracker);
+				}
+				if(assignmentTracker[i].trackingId == trackingId && assignmentTracker[i].status == true){
+					updateData = false;
+					updateAnalyticsData();
+				}				
+			}
+			if(updateData){
+				tracker.trackingId = trackingId;
+				tracker.agentId = agentId;	
+				tracker.status = true;
+				assignmentTracker.push(tracker);
+				updateAnalyticsData();
+			}
+			
+		}
+		
+		},*/
+		
+		// check if agent assigned to tid.
+		isReqAssigned : function(trackingId){
+			console.log("I AM IN isReqAssigned ");
+			var isReqAssigned = false;
+			// loop through assignmentTracker and check for status
+			for ( var i = 0; i < assignmentTracker.length; i++) {
+				// if true return return assignmentTracker obj
+				if(assignmentTracker[i].trackingId === trackingId ){
+					isReqAssigned = true;
+					return assignmentTracker[i];
+				}
+			}
+			// if new not yet assigned return false.
+			if(!isReqAssigned){
+				return isReqAssigned;
+			}
+		},
+		removeAssignmentData : function(trackingId){
+			for ( var i = 0; i < assignmentTracker.length; i++){
+				if(trackingId === assignmentTracker[i].trackingId){
+					assignmentTracker.splice(i,1);
+				}
+			}
+		}
+		
 };
 	
 }]);
