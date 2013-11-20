@@ -48,17 +48,9 @@ angular.module('myApp.dashBoardControllers', []).
 
 	  	   //** Pie Chart ends **//
 	  	//** google maps begin **//
-		 /*$scope.center ={
-					latitude: 47, // initial map center latitude
-					longitude: -122, // initial map center longitude
-				};
-		$scope.markers= []; // an array of markers,
-		$scope.zoomProperty= 4; // the zoom level
-*/		$scope.markersProperty = AnalyticsData.getLatLon();
-		
-		//$scope.markersProperty = UtilSer
-		
-			
+		 
+	  	 $scope.markersProperty = AnalyticsData.getLatLon();
+	  	 $scope.$apply();
 		 //** google maps ends **//
 	                     
 	   });
@@ -86,9 +78,7 @@ angular.module('myApp.dashBoardControllers', []).
 	        		//** updating ruleCount of RuleConfig array, bad logic **//
 	        		RuleData.setRuleCountRuleConfig(data.ruleId);
 	        		//$scope.ruleDetailsName = RuleData.getRuleConfig();	
-	        		$scope.$apply();
-	        		console.log("rule triggered");
-	        		console.log(data);
+	        		$scope.$apply();	        		
 	        		
 	        	}
 	        	else{

@@ -15,32 +15,39 @@
 										placeholder="type to search">
 								</div>
 							</div> -->
-							<div class="col-xs-3">
+							<div class="col-xs-2">
 								<div class="input-group">
 									<span class="input-group-addon">Page</span> <input type="text"
 										ng-model="search.pageData" class="form-control"
-										placeholder="type to search">
+										placeholder="search">
 								</div>
 							</div>
-							<div class="col-xs-3	">
+							<div class="col-lg-3">
 								<div class="input-group">								
 									<span class="input-group-addon ">Tracking Id</span> <input
 										type="text" ng-model="search.trackingId" class="form-control"
-										placeholder="type to search">
+										placeholder="search">
 								</div>
 							</div>
-							<div class="col-xs-3">
+							<div class="col-xs-2">
 								<div class="input-group">								
 									<span class="input-group-addon ">Device</span> <input
 										type="text" ng-model="search.device" class="form-control"
-										placeholder="type to search">
+										placeholder="search">
+								</div>
+							</div>
+							<div class="col-xs-2">
+								<div class="input-group">								
+									<span class="input-group-addon ">Agent</span> <input
+										type="text" ng-model="search.agentId" class="form-control"
+										placeholder="search">
 								</div>
 							</div>
 							<div class="col-xs-3">
 								<div class="input-group">								
-									<span class="input-group-addon ">Agent</span> <input
-										type="text" ng-model="search.agentId" class="form-control"
-										placeholder="type to search">
+									<span class="input-group-addon ">Location</span> <input
+										type="text" ng-model="search.geoData" class="form-control"
+										placeholder="search">
 								</div>
 							</div>
 							<!-- end of col-sm-3"-->
@@ -78,7 +85,7 @@
 											<a href="" ng-click="predicate = 'ruleName'; reverse=!reverse">
 											<span class="glyphicon glyphicon-collapse-up"></span></a>
 										</th> -->
-										<th>Page</th>
+										<!-- <th>Page</th> -->
 										<th><a href=""
 											ng-click="predicate = 'timeStamp'; reverse=!reverse">Time</a>
 											<a href="" ng-click="predicate = 'timeStamp'; reverse=!reverse">
@@ -110,13 +117,13 @@
 										<span ng-show="!data.isNewUser" class="label label-danger">Return User</span>
 										</td>
 										<!-- <td ng-show="data.isRule">{{data.ruleDetails.ruleName}}</td> -->
-										<td>{{data.pageData.pathname}}</td>
+										<!-- <td>{{data.pageData.pathname}}</td> -->
 										<td>{{data.timeStamp|date:'short'}}</td>										
 										<td class="visible-xs"><a data-toggle="modal"
 											href="#moreInfoModal{{$index}}" class="btn btn-primary btn-xs"> <span
 												class="glyphicon glyphicon-share"></span></a></td>
 										<!-- /.modal starts -->
-										<td>{{data.geoData.country}}</td>
+										<td>{{data.geoData.country}},{{data.geoData.city}}</td>
 										<td>
 											<span ng-show="!data.reqStatus" class="label label-info">Un-Assigned</span>
 											<span ng-show="data.reqStatus" class="label label-warning">{{data.agentId}}</span>
@@ -175,6 +182,7 @@
 																		 <span><strong>City : </strong>{{data.geoData.city}}</span><br>
 																		 <span><strong>Region : </strong>{{data.geoData.region}}</span><br>
 																		 <span><strong>IP : </strong>{{data.geoData.ip}}</span><br>
+																		 <span><strong>Paath : </strong>{{data.pageData.pathname}}</span><br>																		 
 																		 <span><strong>First Visited : </strong>{{data.pageData.firstVisit|date:'medium'}}</span><br>
 																		 <span><strong>Last Visited : </strong>{{data.pageData.lastVisit|date:'medium'}}</span><br>
 																		 <span><strong>Total Visits : </strong>{{data.pageData.totalVisit}}</span><br>
