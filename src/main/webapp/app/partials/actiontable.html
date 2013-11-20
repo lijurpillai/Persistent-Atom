@@ -85,6 +85,7 @@
 											<span class="glyphicon glyphicon-collapse-up"></span></a>
 										</th>										
 										<th class="visible-xs">More</th>
+										<th>Region</th>
 										<th><a href=""
 											ng-click="predicate = 'agentId'; reverse=!reverse">Assigned</a>
 											<a href="" ng-click="predicate = 'agentId'; reverse=!reverse">
@@ -110,12 +111,12 @@
 										</td>
 										<!-- <td ng-show="data.isRule">{{data.ruleDetails.ruleName}}</td> -->
 										<td>{{data.pageData.pathname}}</td>
-										<td>{{data.timeStamp|date:'medium'}}</td>										
+										<td>{{data.timeStamp|date:'short'}}</td>										
 										<td class="visible-xs"><a data-toggle="modal"
 											href="#moreInfoModal{{$index}}" class="btn btn-primary btn-xs"> <span
 												class="glyphicon glyphicon-share"></span></a></td>
 										<!-- /.modal starts -->
-										
+										<td>{{data.geoData.country}}</td>
 										<td>
 											<span ng-show="!data.reqStatus" class="label label-info">Un-Assigned</span>
 											<span ng-show="data.reqStatus" class="label label-warning">{{data.agentId}}</span>
@@ -170,8 +171,10 @@
 																			Status<span class="label label-default">Value</span>
 																		</h4>
 																	</div>
-																		 <span><strong>Cookie enabled : </strong>{{data.pageData.cookieEnabled}}</span><br>
-																		 <span><strong>LocalStorage enabled : </strong>{{data.pageData.localStorageEnabled}}</span><br>
+																		 <span><strong>Country : </strong>{{data.geoData.country}}</span><br>
+																		 <span><strong>City : </strong>{{data.geoData.city}}</span><br>
+																		 <span><strong>Region : </strong>{{data.geoData.region}}</span><br>
+																		 <span><strong>IP : </strong>{{data.geoData.ip}}</span><br>
 																		 <span><strong>First Visited : </strong>{{data.pageData.firstVisit|date:'medium'}}</span><br>
 																		 <span><strong>Last Visited : </strong>{{data.pageData.lastVisit|date:'medium'}}</span><br>
 																		 <span><strong>Total Visits : </strong>{{data.pageData.totalVisit}}</span><br>
