@@ -304,3 +304,6 @@ fieldset[disabled] .btn-primary.active {
 .alert-info{
 	padding:10px;
 }
+.angular-google-map {
+        display: block;
+}

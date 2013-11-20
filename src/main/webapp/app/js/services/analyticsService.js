@@ -218,6 +218,18 @@ analyticsService.factory('AnalyticsData',['$log','UserAgentService','Constants',
 	    	});
 	    	return activeUsers;
 	    },
+	    getLatLon : function(){
+	    	var latLon = [];
+	    	
+	    	for (var i = 0; i < analyticsData.length; i++) {
+	    		var latLonObj = {};
+	    		var array = analyticsData[i].geoData.loc.split(',');
+	    		latLonObj.latitude = array[0];	    		
+	    		latLonObj.longitude = array[1];
+	    		latLon.push(latLonObj);
+	    	}
+	    	return latLon;
+	    },
 	    resetAnalyticsData:function(){	    	
 	    	analyticsData.length = 0;
 	    },

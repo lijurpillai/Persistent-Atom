@@ -7,7 +7,14 @@ angular.module('myApp.dashBoardControllers', []).
 	 $scope.activeUsersTooltip = Constants.ACTIVE_USERS_TXT;
 	 $scope.userDetailsTooltip = Constants.USER_DETAILS_TXT;
 	 $scope.ruleDetailsTooltip = Constants.RULES_DETAILS_TXT;
-	//** tooltipends **//
+	//** tooltipends **//	
+	$scope.center ={
+				latitude: 47, // initial map center latitude
+				longitude: -122, // initial map center longitude
+			};
+	$scope.markers= []; // an array of markers,
+	$scope.zoomProperty= 2; // the zoom level
+	$scope.markersProperty = [];
 	 var channelName = getChannelName();	 
 	 console.log("Channel ----> " + channelName);
 	 function getChannelName(){
@@ -40,6 +47,19 @@ angular.module('myApp.dashBoardControllers', []).
 	  	                            ];
 
 	  	   //** Pie Chart ends **//
+	  	//** google maps begin **//
+		 /*$scope.center ={
+					latitude: 47, // initial map center latitude
+					longitude: -122, // initial map center longitude
+				};
+		$scope.markers= []; // an array of markers,
+		$scope.zoomProperty= 4; // the zoom level
+*/		$scope.markersProperty = AnalyticsData.getLatLon();
+		
+		//$scope.markersProperty = UtilSer
+		
+			
+		 //** google maps ends **//
 	                     
 	   });
 	 
@@ -56,7 +76,7 @@ angular.module('myApp.dashBoardControllers', []).
 	        channel : channelName,
 	        message : function(data){
 	        	console.log(JSON.stringify(data, null, 2)); 
-	        	AnalyticsDBService.updateData(data);
+	        	//AnalyticsDBService.updateData(data);
 	        	
 	        	if(data.isRule){
 	        		//** set rule data from clinet **//

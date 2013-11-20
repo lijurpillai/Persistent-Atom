@@ -183,52 +183,7 @@ return{
 		getAssignmentTracker:function(){
 			return assignmentTracker;
 		},
-	/*setAssignmentTracker:function(trackingId,agentId,analyticsData){	
-		var updateData = true;
-		var tracker = {};
-		var updateAnalyticsData = function(){
-			for (var i = 0; i < analyticsData.length; i++) {				
-				if(trackingId == analyticsData[i].trackingId){
-					analyticsData[i].reqStatus = true;
-					analyticsData[i].agentId = 	agentId;
-				};  
-			}
-		}
-		// if tracker is null add data.
-		if(assignmentTracker.length == 0){			
-			tracker.trackingId = trackingId;
-			tracker.agentId = agentId;
-			tracker.status = true; // assigned
-			assignmentTracker.push(tracker);
-			//updateAnalyticsData();
-		}
-		// else if trackingId matches update statu to true and agent Id
-		else{			
-			for ( var i = 0; i < assignmentTracker.length; i++) {
-				if(assignmentTracker[i].trackingId == trackingId){
-					tracker.trackingId = trackingId;
-					tracker.agentId = agentId;	
-					tracker.status = true;
-					assignmentTracker.push(tracker);
-				}
-				if(assignmentTracker[i].trackingId == trackingId && assignmentTracker[i].status == true){
-					updateData = false;
-					updateAnalyticsData();
-				}				
-			}
-			if(updateData){
-				tracker.trackingId = trackingId;
-				tracker.agentId = agentId;	
-				tracker.status = true;
-				assignmentTracker.push(tracker);
-				updateAnalyticsData();
-			}
-			
-		}
-		
-		},*/
-		
-		// check if agent assigned to tid.
+	
 		isReqAssigned : function(trackingId){
 			console.log("I AM IN isReqAssigned ");
 			var isReqAssigned = false;

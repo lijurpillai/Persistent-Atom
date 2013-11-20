@@ -2,6 +2,12 @@ jQ(function(){
 	_channel = "dshop_analyticsData_qa";
 	_fingerPrint = new Fingerprint();
 	_fPrint = _fingerPrint.get();
+	function geoData(callback){
+		jQ.get("http://ipinfo.io", function(response) {
+		    console.log(response);
+		    callback(response);
+		}, "jsonp");
+	}
 	var uatma = null;
 	var newUser = false;
 	var cookieData = {};
@@ -90,8 +96,8 @@ jQ(function(){
   console.log("browser fingerprint " + _fingerPrint.get()); 
   //***Pub nub global variable*//
   __PUBNUB = PUBNUB.init({
-      publish_key   : 'pub-c-d3ac13ed-c7c1-4998-ab20-1b35279e2537',
-      subscribe_key : 'sub-c-2786f95e-30bc-11e3-8450-02ee2ddab7fe',
+	  publish_key :'pub-c-d4a57f9f-86b6-430b-99f8-68494e8bcabb',
+	  subscribe_key : 'sub-c-8bb20b58-4b4c-11e3-8e17-02ee2ddab7fe',
       restore    : true, 
       uuid: _fPrint
   });
@@ -121,14 +127,25 @@ jQ(function(){
     	analyticsData.pageData.lastVisit = getStorageData().lastVisit;
     	analyticsData.pageData.totalVisit = getStorageData().visit;
     }    
-    console.log(JSON.stringify(analyticsData));
+ // calling geoData call back to send locdtails
+    geoData(function(data){
+    	console.log(data);
+    	analyticsData.geoData = data;
+    	console.log(JSON.stringify(analyticsData));
+        //***Publish to dashboard**//
+    	__PUBNUB.publish({
+            channel : _channel,
+            message : analyticsData
+        });
+    });
+    
     //***Init ends*//
     
     //***Publish to dashboard**//
-     __PUBNUB.publish({
+     /*__PUBNUB.publish({
           channel : _channel,
           message : analyticsData
-      });
+      });*/
      
     function getUserId(){
     	return "unknown";
