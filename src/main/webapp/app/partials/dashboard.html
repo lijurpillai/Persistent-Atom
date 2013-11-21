@@ -1,15 +1,6 @@
 <div class="container" ng-controller="PresenceCtrl">
 <div class="row">
-<div class="col-sm-4 col-xs-12">	
-	<div class="row">
-        <div class="alert alert-info">All data displayed is since <strong>{{loginTime|date:'medium'}}</strong>
-        <br>
-        <div class ="plan-font5">
-        Please do not refresh or use back button. All data will reset after logout.<br>
-        For help,place mouse pointer over <span class="glyphicon glyphicon-info-sign"></span> icon.
-        </div>
-       </div>
- 	</div> 
+<div class="col-sm-2 col-xs-12">	 
 	<div class="row">
 		 <div class="pricing-table pricing-three-column">
         <div class="plan">
@@ -35,25 +26,18 @@
 </div><!--end col-sm-3 -->
 
 	
-	<div class="col-sm-8 col-xs-12">
+	<div class="col-sm-10 col-xs-12">
 
-               
-             <div class="alert alert-info">  
-				<strong><span class="glyphicon glyphicon-info-sign" tooltip="{{userDetailsTooltip}}"></span> User Details</strong>	
-				
-				<div class="row">  
-					<div class="col-sm-5 hidden-xs">
-                	<piechart ng-model="pieChartUserType"></piechart>
-                	</div>	
-					<div class="col-sm-1"></div>	
-		<div class="col-sm-6 col-xs-12">
-		  
+		<div class="bg-white"> 	
+		<div class="row">  
+		<div class="col-sm-4 col-xs-12">
+		<h5><span class="glyphicon glyphicon-info-sign" tooltip="{{deviceDetailsTooltip}}"></span> Device Details</h5>
 				  <div class="table-responsive">
 				    <table class="table table-bordered table-hover">				   
 				                    <tr>
 				                    <th class="text-center">Type</th>
 				                      <th class="text-center">Device</th>
-				                      <th class="text-left">Operating System</th>
+				                      <th class="text-left">OS</th>
 				                      <th class="text-center">Visits</th>
 				                    </tr>
 
@@ -90,69 +74,10 @@
 				</div><!-- end table responsive-->
 
 		</div> <!-- end col-sm-7 col-xs-12 -->
-
-
-		</div><!-- end row-->
-	</div><!-- end alert-->
- </div><!-- end col col-sm-8 col-xs-12"-->
-
-
-
-</div><!--end row-->
-<!--  commented
-<div class="row">
-	<div class=" col-lg-10" >
-		<google-map  center="center"
-                zoom="zoomProperty" 
-                markers="markersProperty"
-                latitude="clickedLatitudeProperty"
-                longitude="clickedLongitudeProperty"
-                mark-click="true"
-                draggable="true"
-                fit="false"
-                events="eventsProperty"
-                style="height: 400px; width: 100%">
-        </google-map>	
-	</div>
-
-</div>
-commented -->
-
-	<div class=" col-sm-5 col-xs-12">
-
-		<div class="widget">
-		<div class="widget-head">
-        <div class="pull-center">
-        <div class="container">
-                  		<strong><span class="glyphicon glyphicon-info-sign" tooltip="{{ruleDetailsTooltip}}"></span> Rules</strong> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-			<a href="#/ruleactiontable" type="button" class="btn btn-sm btn-info">Total Count <span class="badge"><strong>{{totalRules}}</strong></span></a>
+		<div class="col-sm-1">
 		</div>
-        </div><!--end pull center -->
-        </div><!--end widget head -->  
-
-            <div class="widget-content">	
-			<table class="table table-bordered table-hover">
-  					<thead>
-  						<tr>
-  							<th>Name</th>
-  							<th>Id</th>
-  							<th>Count</th>
-  						</tr>  						
-  					</thead>
-  					<tbody ng-repeat="ruleDetails in ruleDetailsName" >
-  						<tr>
-  							<td>{{ruleDetails.displayName}}</td>
-  							<td>{{ruleDetails.ruleId}}</td>  
-  							<td><button ng-click = "goToRuleTable(ruleDetails.ruleId)" type="button" class="btn btn-sm btn-primary">{{ruleDetails.ruleCount}}</button></td>
-  						</tr>
-  					</tbody>
-				</table>
-			</div><!-- end widget content -->
-		</div><!-- end widget  -->
-	</div> <!-- end col-sm-5 col-xs-12-->
-
-<div class=" col-md-7 hidden-xs hidden-sm">
-		<div class="widget">
+		<div class="col-sm-7 hidden-xs">
+			<div class="widget">
                 <div class="widget-head">
                 <div class="pull-center"><span class="glyphicon glyphicon-info-sign" tooltip="{{pageCountTooltip}}"></span> Page Visits
                  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
@@ -163,4 +88,75 @@ commented -->
 				<chart ng-model='chartData'></chart>
 		 		</div> <!--widget content-->
 		 </div> <!--end widget -->
+		
+</div><!--enc controller -->
+
+
+		</div><!-- end row-->
+		</div>
+		</div>
+</div>
+
+ </div><!-- end col col-sm-8 col-xs-12"-->
+<br>
+
+<div class="row">
+
+	<div class="col-sm-8 bg-f8-mg" >
+	   
+    <div class="col-sm-9 hidden-xs">      	
+	
+		<google-map  center="center"
+                zoom="zoomProperty" 
+                markers="markersProperty"
+                latitude="clickedLatitudeProperty"
+                longitude="clickedLongitudeProperty"
+                mark-click="true"
+                draggable="true"
+                fit="false"
+                events="eventsProperty"
+                style="height: 260px; width: 90%">
+        </google-map>	
+        </div> 
+     <div class="col-sm-3 hidden-xs">	
+	<h5><span class="glyphicon glyphicon-info-sign" tooltip="{{userDetailsTooltip}}"></span> User Details</h5>
+     <piechart ng-model="pieChartUserType"></piechart>
+    </div>
+	</div>
+
+  
+	 <div class="col-sm-4"> 
+		<div class="widget">
+		<div class="widget-head">
+        <div class="pull-center">
+        <div class="container">
+                  		<strong><span class="glyphicon glyphicon-info-sign" tooltip="{{ruleDetailsTooltip}}"></span> Rules</strong>  &nbsp; &nbsp;&nbsp;
+			<a href="#/ruleactiontable" type="button" class="btn btn-sm btn-info">Total Count <span class="badge"><strong>{{totalRules}}</strong></span></a>
+		</div>
+        </div><!--end pull center -->
+        </div><!--end widget head -->  
+
+            <div class="widget-content">	
+			<table class="table table-bordered table-hover">
+  					<thead>
+  						<tr>
+  							<th>Name</th>
+  							<th>Count</th>
+  						</tr>  						
+  					</thead>
+  					<tbody ng-repeat="ruleDetails in ruleDetailsName" >
+  						<tr>
+  							<td>{{ruleDetails.displayName}}</td>
+  							<td><button ng-click = "goToRuleTable(ruleDetails.ruleId)" type="button" class="btn btn-sm btn-primary">{{ruleDetails.ruleCount}}</button></td>
+  						</tr>
+  					</tbody>
+				</table>
+			</div><!-- end widget content -->
+		</div><!-- end widget  -->
+		</div> 
+
+
+
+ </div> 
+
 </div><!--enc controller -->

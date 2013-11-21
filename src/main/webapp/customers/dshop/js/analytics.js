@@ -4,7 +4,6 @@ jQ(function(){
 	_fPrint = _fingerPrint.get();
 	function geoData(callback){
 		jQ.get("http://ipinfo.io", function(response) {
-		    console.log(response);
 		    callback(response);
 		}, "jsonp");
 	}

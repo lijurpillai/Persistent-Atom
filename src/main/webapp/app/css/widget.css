@@ -4,7 +4,7 @@
   border: 1px solid #c9c9c9;
   border-radius: 3px;
   margin-top: 10px;
-  margin-bottom: 20px; 
+  margin-bottom: 10px; 
   background: #fafafa;
 }
 
@@ -90,7 +90,7 @@
 	color: #666;
 	font-size: 13px;
 	font-weight: bold;
-    padding: 8px 15px;
+    padding: 4px 8px;
 }
 
 .widget.wblack .widget-head{
@@ -285,4 +285,15 @@
 
 .widget.wblack .tab-content{
 	margin-bottom: 10px;
+}
+.bg-white {
+padding: 5px;
+  border: 1px solid #c9c9c9;
+  background: #f8f8f8;
+}
+.bg-f8-mg {
+  padding: 5px;
+  padding-right: 40px;
+  border: 1px solid #c9c9c9;
+  background: #f8f8f8;
 }

@@ -152,13 +152,13 @@ a.list-group-item:focus {
 
 chart {
     display: block;
-    width:620px;
-    height:200px;
+    width:520px;
+    height:190px;
 }
 piechart {
     display: block;
-    width:280px;
-    height:200px;
+    width:200px;
+    height:175px;
 }
 
 body{
@@ -302,7 +302,7 @@ fieldset[disabled] .btn-primary.active {
 	color:#488BCA	;
 }
 .alert-info{
-	padding:10px;
+	padding:3px;
 }
 .angular-google-map {
         display: block;

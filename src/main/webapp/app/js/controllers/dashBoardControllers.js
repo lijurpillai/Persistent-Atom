@@ -7,13 +7,14 @@ angular.module('myApp.dashBoardControllers', []).
 	 $scope.activeUsersTooltip = Constants.ACTIVE_USERS_TXT;
 	 $scope.userDetailsTooltip = Constants.USER_DETAILS_TXT;
 	 $scope.ruleDetailsTooltip = Constants.RULES_DETAILS_TXT;
+	 $scope.deviceDetailsTooltip=Constants.DEVICE_DETAILS_TXT;
 	//** tooltipends **//	
 	$scope.center ={
-				latitude: 47, // initial map center latitude
-				longitude: -122, // initial map center longitude
+				latitude: 23, // initial map center latitude
+				longitude: 5, // initial map center longitude
 			};
 	$scope.markers= []; // an array of markers,
-	$scope.zoomProperty= 2; // the zoom level
+	$scope.zoomProperty= 1; // the zoom level
 	$scope.markersProperty = [];
 	 var channelName = getChannelName();	 
 	 console.log("Channel ----> " + channelName);
