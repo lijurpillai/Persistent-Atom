@@ -43,6 +43,7 @@
 										placeholder="search">
 								</div>
 							</div>
+							<!--  commented
 							<div class="col-xs-3">
 								<div class="input-group">								
 									<span class="input-group-addon ">Location</span> <input
@@ -50,6 +51,7 @@
 										placeholder="search">
 								</div>
 							</div>
+							commented -->
 							<!-- end of col-sm-3"-->
 						</div>
 						<!-- end of container"-->
@@ -92,7 +94,7 @@
 											<span class="glyphicon glyphicon-collapse-up"></span></a>
 										</th>										
 										<th class="visible-xs">More</th>
-										<th>Region</th>
+										<!--  th>Region</th-->
 										<th><a href=""
 											ng-click="predicate = 'agentId'; reverse=!reverse">Assigned</a>
 											<a href="" ng-click="predicate = 'agentId'; reverse=!reverse">
@@ -123,7 +125,7 @@
 											href="#moreInfoModal{{$index}}" class="btn btn-primary btn-xs"> <span
 												class="glyphicon glyphicon-share"></span></a></td>
 										<!-- /.modal starts -->
-										<td>{{data.geoData.country}},{{data.geoData.city}}</td>
+										<!--  td>{{data.geoData.country}},{{data.geoData.city}}</td-->
 										<td>
 											<span ng-show="!data.reqStatus" class="label label-info">Un-Assigned</span>
 											<span ng-show="data.reqStatus" class="label label-warning">{{data.agentId}}</span>
