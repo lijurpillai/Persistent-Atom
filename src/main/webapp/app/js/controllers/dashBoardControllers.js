@@ -51,7 +51,7 @@ angular.module('myApp.dashBoardControllers', []).
 	  	//** google maps begin **//
 		 
 	  	 $scope.markersProperty = AnalyticsData.getLatLon();
-	  	 $scope.$apply();
+	  	// $scope.$apply();
 		 //** google maps ends **//
 	                     
 	   });

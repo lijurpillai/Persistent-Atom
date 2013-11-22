@@ -223,10 +223,13 @@ analyticsService.factory('AnalyticsData',['$log','UserAgentService','Constants',
 	    	
 	    	for (var i = 0; i < analyticsData.length; i++) {
 	    		var latLonObj = {};
-	    		var array = analyticsData[i].geoData.loc.split(',');
-	    		latLonObj.latitude = array[0];	    		
-	    		latLonObj.longitude = array[1];
-	    		latLon.push(latLonObj);
+	    		if(analyticsData[i].geoData && analyticsData[i].geoData.loc){
+		    		var array = analyticsData[i].geoData.loc.split(',');
+		    		latLonObj.latitude = array[0];	    		
+		    		latLonObj.longitude = array[1];
+		    		latLon.push(latLonObj);
+	    		}
+
 	    	}
 	    	return latLon;
 	    },
