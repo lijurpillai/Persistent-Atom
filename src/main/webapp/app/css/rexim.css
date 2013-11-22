@@ -152,8 +152,8 @@ a.list-group-item:focus {
 
 chart {
     display: block;
-    width:520px;
-    height:190px;
+    width:590px;
+    height:172px;
 }
 piechart {
     display: block;
@@ -306,4 +306,7 @@ fieldset[disabled] .btn-primary.active {
 }
 .angular-google-map {
         display: block;
+}
+.table>th .heading-atom {
+	background-color:#488BCA;border-color:#488BCA
 }

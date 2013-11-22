@@ -34,7 +34,7 @@
 		<h5><span class="glyphicon glyphicon-info-sign" tooltip="{{deviceDetailsTooltip}}"></span> Device Details</h5>
 				  <div class="table-responsive">
 				    <table class="table table-bordered table-hover">				   
-				                    <tr>
+				                    <tr class = "heading-atom">
 				                    <th class="text-center">Type</th>
 				                      <th class="text-center">Device</th>
 				                      <th class="text-left">OS</th>
@@ -74,14 +74,14 @@
 				</div><!-- end table responsive-->
 
 		</div> <!-- end col-sm-7 col-xs-12 -->
-		<div class="col-sm-1">
-		</div>
-		<div class="col-sm-7 hidden-xs">
+		
+		<div class="col-sm-8 hidden-xs">
+		<h6></h6>
+		<div class="pull-left"><span class="glyphicon glyphicon-info-sign" tooltip="{{pageCountTooltip}}"></span> Page Visits</div>
+		<h6></h6>
 			<div class="widget">
                 <div class="widget-head">
-                <div class="pull-center"><span class="glyphicon glyphicon-info-sign" tooltip="{{pageCountTooltip}}"></span> Page Visits
-                 &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
-                 Total page visits since <div class="label label-info">{{loginTime|date:'medium'}}</div> is <div class="label label-info">{{totalPageCount}}</div>               
+                <div class="pull-center"><span class="glyphicon glyphicon-info-sign" tooltip="{{pageCountTooltip}}"></span>Total page visits since <div class="label label-info">{{loginTime|date:'medium'}}</div> is <div class="label label-info">{{totalPageCount}}</div>               
                 </div>  <!--enc widget head -->
 
                 <div class="widget-content">	
@@ -115,7 +115,7 @@
                 draggable="true"
                 fit="false"
                 events="eventsProperty"
-                style="height: 260px; width: 90%">
+                style="height: 260px; width: 90% ">
         </google-map>	
         </div> 
      <div class="col-sm-3 hidden-xs">	
