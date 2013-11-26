@@ -310,3 +310,7 @@ fieldset[disabled] .btn-primary.active {
 .table>th .heading-atom {
 	background-color:#488BCA;border-color:#488BCA
 }
+.btn-info {
+	border-bottom: 1px solid #46b8da;
+	border-top: 1px solid #46b8da;	
+}
