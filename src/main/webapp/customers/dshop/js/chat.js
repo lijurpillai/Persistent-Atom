@@ -1,12 +1,6 @@
 jQ(function() {
 	var box = null;
-	var trackingId = _fPrint;
-	/*var pubnub = PUBNUB.init({
-		publish_key   : 'pub-c-d3ac13ed-c7c1-4998-ab20-1b35279e2537',
-	    subscribe_key : 'sub-c-2786f95e-30bc-11e3-8450-02ee2ddab7fe',
-    	restore    : true, 
-        uuid: _fPrint
-	});*/
+	var trackingId = _fPrint;	
 	var boxClosedCallback = function(id) {
 		console.log(id);
 		__PUBNUB.publish({
@@ -35,6 +29,7 @@ jQ(function() {
 				jQ("#chatBox").chatbox("option", "boxManager").addMsg(id, msg);
 			}
 		});
+		//jQ('.ui-widget-header').append("<span><fb:login-button show-faces='true' width='200' max-rows='1'></fb:login-button></span>");
 		jQ('.ui-chatbox').hide();
 	}
 
