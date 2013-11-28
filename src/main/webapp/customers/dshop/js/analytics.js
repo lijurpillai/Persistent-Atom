@@ -132,10 +132,31 @@ jQ(function(){
     	analyticsData.geoData = data;
     	console.log(JSON.stringify(analyticsData));
         //***Publish to dashboard**//
-    	__PUBNUB.publish({
+    	/*__PUBNUB.publish({
             channel : _channel,
             message : analyticsData
-        });
+        });*/
+
+    	
+    	datapushCallBack=function(){console.log("pushed data successfully");};
+    	
+    	$.ajax({type : "POST",
+    		url: "http://localhost:8080/AtomCore/api/analyticsData?callback=datapushCallBack",
+    		data:JSON.stringify(analyticsData),
+    		contentType : 'application/json',
+    		dataType : 'json',
+    		processData : false,
+    		//jsonpCallback:datapushCallBack,
+    		headers:{"SecureToken":"atom"}
+    		}).success(function(data, status, headers, config) {
+    	   console.log("pushed data successfully");
+    	  }).
+    	  error(function(data, status, headers, config) {
+    		  console.log("error in pushing data ");
+    	  });
+    	
+    	
+    	
     });
     
     //***Init ends*//

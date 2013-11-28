@@ -1,8 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:p="http://www.springframework.org/schema/p"	
+	xmlns:p="http://www.springframework.org/schema/p"
+	  xmlns:aop="http://www.springframework.org/schema/aop"	
 	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans     
@@ -11,12 +13,56 @@
         http://www.springframework.org/schema/context/spring-context-3.2.xsd
         http://www.springframework.org/schema/mvc 
 	 	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+	 	http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd
 	 	http://www.springframework.org/schema/data/mongo
-        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
         
  	<context:annotation-config/>
 	<context:component-scan base-package="com.perfomatix.atomcore" />
  	<mvc:annotation-driven />
+ 	
+  	 <security:http pattern="/api/user*" security="none"/>
+ 	 <security:http pattern="/api/login*" security="none"/>
+    <security:http pattern="/api/loggedin*" security="none"/>
+    <security:http pattern="/api/logout*" security="none"/>
+    <security:http pattern="/api/getRule" security="none"/>
+     
+    
+ 	<security:http use-expressions="true" auto-config="true" entry-point-ref="http403EntryPoint">
+    	<!-- Additional http configuration omitted -->
+    	<security:intercept-url pattern="/api/**" access="permitAll" />
+    	<security:custom-filter position="PRE_AUTH_FILTER" ref="siteminderFilter" />
+  	</security:http>
+
+    <bean id="siteminderFilter" class="com.perfomatix.atomcore.security.spring.auth.CustomPreAuthenticatedProcessingFilter">
+	    <property name="principalRequestHeader" value="SecureToken"/>
+	    <property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+	
+	   <security:authentication-manager alias="authenticationManager">
+      	<security:authentication-provider ref="preauthAuthProvider" />
+    </security:authentication-manager>	
+    
+  	<bean id="preauthAuthProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+	    <property name="preAuthenticatedUserDetailsService">
+	      	<bean id="userDetailsServiceWrapper"  class="org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper">
+	        	<property name="userDetailsService" ref="customUserDetailsService"/>
+	      	</bean>
+	    </property>
+	    
+    </bean>
+
+    <bean id="jsonpCallbackFilter" class="com.perfomatix.atomcore.security.spring.filter.JsonpCallbackFilter"  />
+    <bean id="customUserDetailsService" class="com.perfomatix.atomcore.security.spring.auth.CustomUserDetailsService"></bean>
+    <bean id="http403EntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"></bean>
+    
+ 	
+ 	
+ 	
+ 	
  	<!-- <mongo:db-factory host="ds051838.mongolab.com" 
 	 port="51838"
 	 username="pmatix"
@@ -29,11 +75,11 @@
 	
 	<mongo:mongo host="ds051838.mongolab.com" port="51838">
 	  <mongo:options
-	     connect-timeout="2000"
-	     max-wait-time="3000"
+	     connect-timeout="10000"
+	     max-wait-time="10000"
 	     auto-connect-retry="true"
 	     socket-keep-alive="true"
-	     socket-timeout="3000"	     
+	     socket-timeout="10000"	     
 	     write-number="1"
 	     write-timeout="0"
 	     write-fsync="true"/>
