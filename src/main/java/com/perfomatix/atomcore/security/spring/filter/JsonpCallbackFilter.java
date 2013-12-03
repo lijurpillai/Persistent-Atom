@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.perfomatix.atomcore.security.spring.wrapper.GenericResponseWrapper;
+import com.perfomatix.atomcore.util.Constants;
 import com.perfomatix.atomcore.util.UtilService;
 
 /**
@@ -49,12 +50,20 @@ public class JsonpCallbackFilter implements Filter {
 
 		Map<String, String[]> params = httpRequest.getParameterMap();
 
-		String callback = (params.containsKey("callback") && (params.get("callback")[0] != null)) ? (params.get("callback")[0]).trim() : "";
+		
+		if (Constants.HTTP_REQUEST_METHOD_POST.equalsIgnoreCase(httpRequest.getMethod()) 
+				||	Constants.HTTP_REQUEST_METHOD_OPTIONS.equalsIgnoreCase(httpRequest.getMethod())) {
+			
+			httpResponse.setHeader(Constants.HTTP_RESPONSE_HEADER_ACAO, Constants.HTTP_RESPONSE_HEADER_ACAO_VALUE);
+			httpResponse.setHeader(Constants.HTTP_RESPONSE_HEADER_ACAH, Constants.HTTP_RESPONSE_HEADER_ACAH_VALUE);
+		}
+		
+		String callback = (params.containsKey(Constants.HTTP_REQUEST_CALLBACK) 
+							&& (params.get(Constants.HTTP_REQUEST_CALLBACK)[0] != null)) 
+							? (params.get(Constants.HTTP_REQUEST_CALLBACK)[0]).trim() 
+							: "";
 
 		if (!callback.isEmpty()) {
-
-			httpResponse.setHeader("Access-Control-Allow-Origin", "*");
-			httpResponse.setHeader("Access-Control-Allow-Headers", "SecureToken,Content-Type");
 			
 			OutputStream out = httpResponse.getOutputStream();
 			GenericResponseWrapper wrapper = new GenericResponseWrapper(httpResponse);

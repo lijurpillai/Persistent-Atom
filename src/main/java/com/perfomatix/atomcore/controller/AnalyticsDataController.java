@@ -48,7 +48,7 @@ public class AnalyticsDataController {
 		if(userProfileModelResponse != null){
 			orgId = userProfileModelResponse.getOrgId();
 		}		
-		//orgId = "dshop";
+		orgId = "dshop";
 		if(orgId != null && !orgId.isEmpty()){
 			analyticsDataModelDb.setOrgId(orgId);
 			analyticsDataModelDb.setApiKey(analyticsDataModelRequest.getApiKey());

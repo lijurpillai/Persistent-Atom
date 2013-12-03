@@ -13,6 +13,16 @@ public class Constants {
 	public static final String RULE_ADDED = "rule added";
 	public static final String RULE_LIST = "rule list retrieved";
 	
+	//Spring Security related Constants
+	public static final String HTTP_REQUEST_METHOD_POST = "POST";
+	public static final String HTTP_REQUEST_METHOD_OPTIONS = "OPTIONS";
+	public static final String HTTP_RESPONSE_HEADER_ACAO = "Access-Control-Allow-Origin";
+	public static final String HTTP_RESPONSE_HEADER_ACAH = "Access-Control-Allow-Headers";
+	public static final String HTTP_RESPONSE_HEADER_ACAO_VALUE = "*";
+	public static final String HTTP_RESPONSE_HEADER_ACAH_VALUE = "SecureToken,Content-Type";
+	public static final String HTTP_REQUEST_CALLBACK =  "callback";
+	
+	
 	
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedC
 import org.springframework.util.Assert;
 
 import com.perfomatix.atomcore.controller.AnalyticsDataController;
+import com.perfomatix.atomcore.util.UtilService;
 
 /**
  * 
@@ -34,12 +35,15 @@ public class CustomPreAuthenticatedProcessingFilter extends AbstractPreAuthentic
 		String principal = request.getHeader(principalRequestHeader);
 
 		logger.debug("Secure Url: "+ request.getServletPath() + request.getPathInfo());
-		if ((principal == null) && exceptionIfHeaderMissing) {
-			throw new PreAuthenticatedCredentialsNotFoundException("Security Token not found in request for url:  "+ request.getServletPath() + request.getPathInfo());
-		}
-		if (!principal.equalsIgnoreCase("atom")) { // validate this token
-														// using custom logic
-			throw new PreAuthenticatedCredentialsNotFoundException("Valid Security Token not found in request");
+		if(request.getMethod().equalsIgnoreCase("POST")){
+			if ((principal == null) && exceptionIfHeaderMissing) {
+				throw new PreAuthenticatedCredentialsNotFoundException("Security Token not found in request for url:  "+ request.getServletPath() + request.getPathInfo());
+			}
+			
+			if (UtilService.validateToken(principal)) { // validate this token
+															// using custom logic
+				throw new PreAuthenticatedCredentialsNotFoundException("Valid Security Token not found in request");
+			}
 		}
 
 		return principal;

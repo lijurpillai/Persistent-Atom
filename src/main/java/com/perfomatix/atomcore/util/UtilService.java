@@ -18,7 +18,7 @@ public class UtilService {
 	}
 
 	/**
-	 * 
+	 * @author Sandeep T S
 	 * @param wrapper
 	 * @param callback
 	 * @param out
@@ -32,6 +32,16 @@ public class UtilService {
 		out.write(jsonpclose);
 		wrapper.setContentType("text/javascript;charset=UTF-8");
 		out.close();
+	}
+	/**
+	 * @author Sandeep T S
+	 * @param principal
+	 * @return
+	 */
+	public static boolean validateToken(String principal) {
+		// TODO Auto-generated method stub
+		return !principal.equalsIgnoreCase("atom-core");
+		
 	}
 
 }

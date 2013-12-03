@@ -69,6 +69,7 @@ jQ(function(){
 		cookieData = {tId:_fPrint , firstVisit:Date.now()};
 		jQ.cookie('__uatma',JSON.stringify(cookieData), { expires: 1000, path: '/' });
 		uatma = JSON.parse(jQ.cookie('__uatma'));
+		//uatma = JSON.parse(jQ.cookie('__uatma')?JSON.stringify(cookieData):JSON.stringify(cookieData));
 	}
 	//***Check for repeat user*//
 	else{		
@@ -129,7 +130,7 @@ jQ(function(){
  // calling geoData call back to send locdtails
     geoData(function(data){
     	console.log(data);
-    	analyticsData.geoData = data;
+    	//analyticsData.geoData = data;
     	console.log(JSON.stringify(analyticsData));
         //***Publish to dashboard**//
     	/*__PUBNUB.publish({
@@ -138,22 +139,22 @@ jQ(function(){
         });*/
 
     	
-    	datapushCallBack=function(){console.log("pushed data successfully");};
-    	
     	$.ajax({type : "POST",
-    		url: "http://localhost:8080/AtomCore/api/analyticsData?callback=datapushCallBack",
+    		url: "http://localhost:8080/AtomCore/api/analyticsData",
     		data:JSON.stringify(analyticsData),
     		contentType : 'application/json',
     		dataType : 'json',
     		processData : false,
-    		//jsonpCallback:datapushCallBack,
-    		headers:{"SecureToken":"atom"}
+    		headers:{"SecureToken":"atom-core"}
     		}).success(function(data, status, headers, config) {
-    	   console.log("pushed data successfully");
-    	  }).
-    	  error(function(data, status, headers, config) {
+    			console.dir(data);
+    			console.log("pushed data successfully");
+    		}).
+    		error(function(data, status, headers, config) {
+    		  console.log("data= "+data);
+    		  console.log("status= "+status)
     		  console.log("error in pushing data ");
-    	  });
+    		});
     	
     	
     	

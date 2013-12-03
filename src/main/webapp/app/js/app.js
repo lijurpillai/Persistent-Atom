@@ -58,7 +58,7 @@ angular.module('myApp', ['myApp.filters',
 	      }
 	    });
 	    //================================================
-	
+	    $httpProvider.defaults.headers.common.SecureToken="atom-core";
 
 	$routeProvider.when('/login',
 		{
