@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.perfomatix.atomcore.model.db.AnalyticsDataModelDb;
 import com.perfomatix.atomcore.model.db.MasterAnalyticsData;
+import com.perfomatix.atomcore.model.request.AnalyticSharedData;
 import com.perfomatix.atomcore.model.request.AnalyticsDataModelRequest;
 import com.perfomatix.atomcore.model.response.ResponseMessage;
 import com.perfomatix.atomcore.model.response.UserProfileModelResponse;
@@ -92,6 +93,8 @@ public class AnalyticsDataController {
 			// check if tracking id exists in DB 
 			 // if yes append analyticsData 
 			// else create new
+			
+			AnalyticSharedData.getInstance().addList(analyticsDataModelDb); // added by Sandeep T S
 			
 			if(analyticsDataService.isNewTrackingId(UtilService.generateCollectionName(Constants.ANALYTICS_DATA_COLLECTION,orgId), 
 					analyticsDataModelRequest.getTrackingId())){
