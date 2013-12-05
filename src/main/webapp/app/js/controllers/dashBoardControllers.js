@@ -65,13 +65,23 @@ angular.module('myApp.dashBoardControllers', []).
 		 $location.path('/ruleactiontable').search({ruleId: ruleId});
 	 };
 	 
-	 PubnubService.PUBNUB.subscribe({
-	        channel : channelName,
-	        message : function(data){
-	        	console.log(JSON.stringify(data, null, 2)); 
-	        	//AnalyticsDBService.updateData(data);
-	        	
-	        	if(data.isRule){
+	 $scope.initiateSSE = function(){
+	 /**SSE Example - Start**/
+		if (typeof (EventSource) !== "undefined") {
+			var source = new EventSource("api/sseAnalyticsData");
+			
+			/**What to do when a connection is opened*/
+			source.onopen = function(event){
+				console.log("Connection Opened");
+				console.log(event);
+			};
+			
+			/**What to do when data is received*/
+			source.onmessage = function(event) {
+				var data = angular.fromJson(event.data);
+				console.log("Message Recieved: ");
+				console.log(data);
+				if(data.isRule){
 	        		//** set rule data from clinet **//
 	        		RuleData.setRuleData(data);
 	        		//** Update totalRules on receiving new data **//
@@ -90,6 +100,44 @@ angular.module('myApp.dashBoardControllers', []).
 	        		//** ENDS set page count **//
 		        	console.log(AnalyticsData.getAnalyticsData());
 	        	}
+			};
+			
+			/**What to do when an error is thrown*/
+			source.onerror = function(message){
+				//console.log("Error Recieved: ");console.log(message);
+			};
+			
+		} else {
+			console.log("Sorry, your browser does not support server-sent events...");
+		}
+	/**SSE Example - End**/
+	 }
+	 
+	 /*PubnubService.PUBNUB.subscribe({
+	        channel : channelName,
+	        message : function(data){
+	        	console.log(JSON.stringify(data, null, 2)); 
+	        	//AnalyticsDBService.updateData(data);
+	        	
+	        	if(data.isRule){
+	        		//set rule data from clinet
+	        		RuleData.setRuleData(data);
+	        		//Update totalRules on receiving new data
+	        		$scope.totalRules = RuleData.getRuleData().length;
+	        		//updating ruleCount of RuleConfig array, bad logic
+	        		RuleData.setRuleCountRuleConfig(data.ruleId);
+	        		//$scope.ruleDetailsName = RuleData.getRuleConfig();	
+	        		$scope.$apply();	        		
+	        		
+	        	}
+	        	else{
+	        		AnalyticsData.setMasterAnalyticsData(data);
+	        		AnalyticsData.setAnalyticsData(data);
+	        		//set page count
+	        		AnalyticsData.setPageCount(data);
+	        		//ENDS set page count
+		        	console.log(AnalyticsData.getAnalyticsData());
+	        	}
 			 },
 			 presence   : function( message, env, channel ) {   // PRESENCE
 		            console.log( "Channel: ",            channel           );
@@ -103,5 +151,5 @@ angular.module('myApp.dashBoardControllers', []).
 		            	$scope.allUsers = PresenceManager.getPresenceData().occupancy;
 		            });
 		        }
-	 });	 
+	 });*/	 
 }]);
