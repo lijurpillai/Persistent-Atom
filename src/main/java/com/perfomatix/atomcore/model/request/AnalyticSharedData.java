@@ -39,16 +39,17 @@ public class AnalyticSharedData {
 	public ArrayList<String> getList() {
 		
 		ArrayList<String> newBeanList = (ArrayList<String>) AnalyticDataList.clone();
-		cleanList();
+		//cleanList();
 
 		return newBeanList;
 
 	}
 
-	public void addList(AnalyticsDataModelDb bean) {
+	public void addList(AnalyticsDataModelRequest analyticsDataModelRequest) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			AnalyticDataList.add(mapper.writeValueAsString(bean));
+			cleanList();
+			AnalyticDataList.add(mapper.writeValueAsString(analyticsDataModelRequest));
 			logger.debug("AnalyticDataList :- "+AnalyticDataList.toString() );
 			
 		} catch (JsonGenerationException e) {

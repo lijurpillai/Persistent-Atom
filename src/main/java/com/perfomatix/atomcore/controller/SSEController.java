@@ -1,6 +1,8 @@
 
 package com.perfomatix.atomcore.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,10 +29,15 @@ public class SSEController {
 	private static final Logger logger = Logger.getLogger(AnalyticsDataController.class);
 	
 	@RequestMapping(value ="/sseAnalyticsData", method = RequestMethod.GET)
-	public @ResponseBody
-	ResponseMessage sendAnalyticsData(HttpServletRequest request,HttpServletResponse response, HttpSession session){
-		
-		return new ResponseMessage(Type.success, "200", "data", AnalyticSharedData.getInstance().getList());
+	public @ResponseBody void sendAnalyticsData(HttpServletRequest request,HttpServletResponse response, HttpSession session) throws IOException{
+		logger.debug("In sendAnalyticsData()");
+		/** Setting Content-type to text/event-stream **/
+        response.setContentType("text/event-stream");
+        /**Setting encoding to UTF-8*/
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("data: " +AnalyticSharedData.getInstance().getList() + "\n\n");
+        response.getWriter().flush();
+        response.getWriter().close();
 	}
 
 }

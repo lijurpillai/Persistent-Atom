@@ -65,7 +65,7 @@ angular.module('myApp.dashBoardControllers', []).
 		 $location.path('/ruleactiontable').search({ruleId: ruleId});
 	 };
 	 
-	 $scope.initiateSSE = function(){
+	 //$scope.initiateSSE = function(){
 	 /**SSE Example - Start**/
 		if (typeof (EventSource) !== "undefined") {
 			var source = new EventSource("api/sseAnalyticsData");
@@ -78,7 +78,7 @@ angular.module('myApp.dashBoardControllers', []).
 			
 			/**What to do when data is received*/
 			source.onmessage = function(event) {
-				var data = angular.fromJson(event.data);
+				var data = angular.fromJson(event.data)[0];
 				console.log("Message Recieved: ");
 				console.log(data);
 				if(data.isRule){
@@ -111,8 +111,9 @@ angular.module('myApp.dashBoardControllers', []).
 			console.log("Sorry, your browser does not support server-sent events...");
 		}
 	/**SSE Example - End**/
-	 }
+	// }
 	 
+	// $scope.initiateSSE();
 	 /*PubnubService.PUBNUB.subscribe({
 	        channel : channelName,
 	        message : function(data){

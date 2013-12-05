@@ -94,7 +94,7 @@ public class AnalyticsDataController {
 			 // if yes append analyticsData 
 			// else create new
 			
-			AnalyticSharedData.getInstance().addList(analyticsDataModelDb); // added by Sandeep T S
+			AnalyticSharedData.getInstance().addList(analyticsDataModelRequest); // added by Sandeep T S
 			
 			if(analyticsDataService.isNewTrackingId(UtilService.generateCollectionName(Constants.ANALYTICS_DATA_COLLECTION,orgId), 
 					analyticsDataModelRequest.getTrackingId())){
