@@ -95,8 +95,8 @@ jQ(function(){
   console.log("browser fingerprint " + _fingerPrint.get()); 
   //***Pub nub global variable*//
   __PUBNUB = PUBNUB.init({
-	  publish_key :'pub-c-d4a57f9f-86b6-430b-99f8-68494e8bcabb',
-	  subscribe_key : 'sub-c-8bb20b58-4b4c-11e3-8e17-02ee2ddab7fe',
+	  publish_key :'pub-c-bfee7dd0-a029-4599-a2b2-53896060c503',
+	  subscribe_key : 'sub-c-e3da2b1e-63dc-11e3-8388-02ee2ddab7fe',
       restore    : true, 
       uuid: _fPrint
   });
